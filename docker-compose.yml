@@ -1,0 +1,23 @@
+version: '2'
+services:
+  xnat-postgres:
+    image: postgres:9.6.5-alpine
+    #volumes:
+      #- "./data/postgres:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_USER: xnat
+      POSTGRES_PASSWORD: xnat
+      POSTGRES_DB: xnat
+      
+  
+  xnat:
+    build: ./xnat
+    ports:
+      - "8080:8080"
+    links:
+      - "xnat-postgres:postgres"
+    #volumes:
+      #- "./data/xnat:/xnat/data"
+    environment:
+      PROJECT_NAME: "xnat"
+      SITE_TITLE: "XNAT-1.7"
